@@ -1,0 +1,11 @@
+-- 내가 쓴 코드 (정답 처리는 됨)
+SELECT COUNT(DISTINCT NAME) AS COUNT
+-- 중복 제거 -> DISTINCT 
+FROM ANIMAL_INS
+WHERE NAME != "NULL"
+
+-- 수정한 코드
+SELECT COUNT(DISTINCT NAME) AS COUNT 
+FROM ANIMAL_INS
+WHERE NAME IS NOT NULL;
+-- SQL 쿼리문에서 NULL은 단순한 문자열이 아니라는 점에 유의하자

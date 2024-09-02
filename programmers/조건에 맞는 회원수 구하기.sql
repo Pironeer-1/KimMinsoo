@@ -1,0 +1,6 @@
+SELECT COUNT(USER_ID) AS USERS 
+FROM USER_INFO
+WHERE YEAR(JOINED) = 2021 
+-- YEAR 함수로 특정 숫자를 추출할 수 있다
+AND AGE BETWEEN 20 AND 29;
+-- 쿼리문에서 범위를 지정하는 문법은 BETWEEN ... AND 이다

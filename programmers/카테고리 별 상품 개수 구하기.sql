@@ -1,0 +1,6 @@
+SELECT LEFT(PRODUCT_CODE, 2) AS CATEGORY, COUNT(*) AS PRODUCTS
+-- LEFT(대상, 자리 수): 왼쪽(앞)부터 대상의 자리 수 만큼 끊어서 보여줌
+FROM PRODUCT
+GROUP BY CATEGORY
+-- 카테고리로 그룹화해서 갯수를 계산함
+ORDER BY CATEGORY
