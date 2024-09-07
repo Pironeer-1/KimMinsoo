@@ -1,0 +1,5 @@
+SELECT NAME, COUNT(NAME) AS COUNT
+FROM ANIMAL_INS
+GROUP BY NAME -- 이름을 기준으로 데이터 그룹화
+HAVING COUNT(NAME) >= 2 -- COUNT가 2 이상인 그룹만 선택
+ORDER BY NAME; -- 이름 순 정렬

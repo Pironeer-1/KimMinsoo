@@ -1,0 +1,4 @@
+SELECT ANIMAL_ID, NAME FROM ANIMAL_INS
+WHERE NAME LIKE '%el%' AND ANIMAL_TYPE = 'Dog' 
+-- LIKE 연산자: 문자열에서 특정 패턴을 찾기 위해 사용
+ORDER BY NAME;
