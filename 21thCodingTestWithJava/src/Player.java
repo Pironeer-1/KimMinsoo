@@ -1,13 +1,10 @@
 import java.util.Random;
 import java.util.Scanner;
 
-class Player {
-    private int hp = 50;
-    private int ad = 10;
-    private int ap = 5;
+class Player extends gameCharacter {
 
     public Player() {
-
+        super(50, 10, 5);
     }
 
     public void setStatus(int point) {
@@ -41,9 +38,6 @@ class Player {
             }
         }
     }
-    public void decreaseHp(int damage) {
-        this.hp = Math.max(this.hp - damage, 0); // 체력이 음수로 내려갈 경우 0으로 설정
-    }
 
     public void checkStatus(Enemy enemy) {
         // 플레이어와 적의 현재 상태를 출력합니다.
@@ -53,9 +47,9 @@ class Player {
         int damage = this.ad - enemy.getAdDefence();
         enemy.decreaseHp(damage);
         System.out.println("일반 공격으로 " + damage + " 의 데미지를 주었습니다. \n");
-
     }
 
+    @Override
     public void basicAttack(Enemy enemy) {
         Random r = new Random();
         int criticalPoint = r.nextInt(10) + 1;
@@ -83,6 +77,7 @@ class Player {
         System.out.println("마법 공격으로 " + damage + " 의 데미지를 주었습니다.");
     }
 
+    @Override
     public void healSelf() {
         // 5에서 10 사이의 랜덤 정수를 생성해서 자힐합니다.
         Random r = new Random();
@@ -91,10 +86,7 @@ class Player {
         System.out.println("체력을 회복합니다. 현재 hp는 " + this.hp + " 입니다.");
     }
 
-    public int getHp() {
-        return hp;
-    }
-
+    @Override
     public void attack(Enemy enemy, int playerIndex) {
         Scanner sc = new Scanner(System.in);
 

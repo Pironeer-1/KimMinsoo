@@ -41,9 +41,12 @@ class Game {
 
         if (playersList.isEmpty()) {
             return false;
-        } else {
-            return true;
         }
+
+        if (this.enemy.getHp() <= 0) {
+          return false;
+        }
+        return true;
     }
 
     public Player selectTargetPlayer() {
