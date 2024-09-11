@@ -1,32 +1,38 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+package game;
 
-class Game {
+import enemy.Enemy;
+import player.Player;
+
+import java.util.*;
+
+public class GameSetting {
     private int statusPoint = 13;
     private List<Player> playersList = new ArrayList<>();
     private Enemy enemy;
 
-    public void setPlayers() {
-        Scanner sc = new Scanner(System.in);
+    public GameSetting(Scanner sc) {
+    }
+
+    public void setPlayers(Scanner sc) {
         while (true) {
             try {
                 System.out.print("플레이어 인원을 정하세요: ");
-                int listNum = sc.nextInt();
+                String input = sc.nextLine();
+                int listNum = Integer.parseInt(input);
+
                 if (listNum <= 0) {
                     System.out.println("플레이어 인원은 1 이상이어야 합니다.");
                     continue;
                 }
                 for (int i = 0; i < listNum; i++) {
                     Player player = new Player();
-                    player.setStatus(this.statusPoint);
+                    player.setStatus(this.statusPoint, sc);
                     playersList.add(player);
                 }
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
-                sc.next();
+                sc.nextLine();
             }
         }
     }
@@ -44,7 +50,7 @@ class Game {
         }
 
         if (this.enemy.getHp() <= 0) {
-          return false;
+            return false;
         }
         return true;
     }
@@ -55,32 +61,11 @@ class Game {
         return playersList.get(r.nextInt(playersList.size()));
     }
 
-    public void game() {
-        this.setPlayers();
-        this.setEnemy();
+    public List<Player> getPlayersList() {
+        return playersList;
+    }
 
-        while (this.turnCheck()) {
-            for (int playerIndex = 0; playerIndex < playersList.size(); playerIndex++) {
-                Player player = playersList.get(playerIndex);
-                System.out.println(playersList.size());
-                player.attack(enemy, playerIndex);
-                if (enemy.getHp() == 0) {
-                    break;
-                }
-            }
-            if (this.turnCheck()) {
-               Player targetPlayer = this.selectTargetPlayer();
-               int targetIndex = playersList.indexOf(targetPlayer);
-               this.enemy.attack(targetPlayer, targetIndex);
-
-            } else {
-                break;
-            }
-        }
-        if (this.enemy.getHp() <= 0) {
-            System.out.println("축하합니다! 승리하셨습니다.");
-        } else {
-            System.out.println("아쉽지만 패배하셨습니다.");
-        }
+    public Enemy getEnemy() {
+        return enemy;
     }
 }
