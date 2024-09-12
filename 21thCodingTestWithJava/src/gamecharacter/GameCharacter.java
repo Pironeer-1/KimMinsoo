@@ -1,8 +1,5 @@
 package gamecharacter;
 
-import enemy.Enemy;
-import player.Player;
-
 public abstract class GameCharacter {
     protected int hp;
     protected int ad;

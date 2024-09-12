@@ -1,8 +1,9 @@
 package enemy;
 
 import player.Player;
-
 import java.util.*;
+
+import static gameenums.GameEnums.*;
 
 public class EnemyAction {
 
@@ -18,7 +19,7 @@ public class EnemyAction {
     }
 
     public void healSelf() {
-        int healingAmount = 7;
+        int healingAmount = ENEMY_HEALING_AMOUNT.getValue();
         enemy.heal(healingAmount);
     }
 
@@ -28,9 +29,9 @@ public class EnemyAction {
         System.out.println("적의 차례입니다.\n");
         int enemyAction = r.nextInt(10) + 1;
 
-        if (enemyAction == 1) {
+        if (enemyAction == ENEMY_STUN.getValue()) {
             System.out.println("적은 섣불리 움직이지 못하고 있습니다.");
-        } else if (2 <= enemyAction && enemyAction <= 8) {
+        } else if (ENEMY_ATTACK_START_POINT.getValue() <= enemyAction && enemyAction <= ENEMY_ATTACK_END_POINT.getValue()) {
             this.basicAttack(player, playerIndex);
         } else {
             this.healSelf();

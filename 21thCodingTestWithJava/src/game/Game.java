@@ -4,6 +4,7 @@ import enemy.Enemy;
 import enemy.EnemyAction;
 import player.Player;
 import player.PlayerAction;
+import static gameenums.GameEnums.*;
 
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class Game {
                 this.playerAction = new PlayerAction(player, sc);
                 System.out.println("남은 플레이어: " + gameSetting.getPlayersList().size() + "명");
                 playerAction.attack(enemy, playerIndex);
-                if (enemy.getHp() == 0) {
+                if (enemy.getHp() == MIN_HP.getValue()) {
                     break;
                 }
             }
@@ -54,7 +55,7 @@ public class Game {
                 break;
             }
         }
-        if (this.enemy.getHp() <= 0) {
+        if (this.enemy.getHp() <= MIN_HP.getValue()) {
             System.out.println("축하합니다! 승리하셨습니다.");
             closeScanner();
         } else {

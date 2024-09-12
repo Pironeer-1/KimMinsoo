@@ -4,6 +4,7 @@ import enemy.Enemy;
 
 import java.util.Random;
 import java.util.Scanner;
+import static gameenums.GameEnums.*;
 
 public class PlayerAction {
 
@@ -28,12 +29,13 @@ public class PlayerAction {
         int criticalPoint = r.nextInt(10) + 1;
         // 랜덤으로 1부터 10 사이의 정수 생성
         // 원리: random.nextInt(10)으로 0부터 9까지 랜덤 정수 생성, 각각에 1씩 더하기
-        int damage = Math.max(player.getAd() - enemy.getAdDefence(), 0);
+
+        int damage = Math.max(player.getAd() - enemy.getAdDefence(), MIN_DAMAGE.getValue());
         // 데미지가 음수가 되는 것을 막음
 
         // criticalPoint가 2보다 작은 경우 치명타가 발생했다고 간주
-        if (criticalPoint <= 2) {
-            damage *= 2;
+        if (criticalPoint <= PLAYER_CRITICAL_RATE_POINT.getValue()) {
+            damage *= CRITICAL_DAMMAGE_MULTIPLYER.getValue();
             enemy.decreaseHp(damage);
             System.out.println("치명타가 적용되어 " + damage + " 의 데미지를 주었습니다.");
         } else {
@@ -44,7 +46,7 @@ public class PlayerAction {
 
     public void magicAttack(Enemy enemy) {
         // 플레이어의 마공 * 2에서 적의 마방을 뺀 만큼 데미지 주기
-        int damage = Math.max(player.getAp() * 2 - enemy.getApDefence(), 0);
+        int damage = Math.max(player.getAp() * PLAYER_MAGIC_ATTACK_MULTIPLIER.getValue() - enemy.getApDefence(), MIN_DAMAGE.getValue());
         // 데미지가 음수가 되는 것을 막음
         enemy.decreaseHp(damage);
         System.out.println("마법 공격으로 " + damage + " 의 데미지를 주었습니다.");

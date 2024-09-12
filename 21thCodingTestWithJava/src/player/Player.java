@@ -1,15 +1,13 @@
 package player;
 
 import gamecharacter.GameCharacter;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Scanner;
+import static gameenums.GameEnums.*;
 
 public class Player extends GameCharacter {
 
     public Player() {
-        super(50, 10, 5);
+        super(PLAYER_INITIAL_HP.getValue(), PLAYER_INITIAL_AD.getValue(), PLAYER_INITIAL_AP.getValue());
     }
 
     public void setStatus(int point, Scanner sc) {
@@ -30,9 +28,9 @@ public class Player extends GameCharacter {
                 int apPoints = Integer.parseInt(values[2]);
 
                 if (hpPoints + adPoints + apPoints == point) {
-                    this.hp += hpPoints * 3;
-                    this.ad += adPoints;
-                    this.ap += apPoints;
+                    this.hp += hpPoints * PLAYER_HP_MULTIPLYER.getValue();
+                    this.ad += adPoints * PLAYER_AD_MULTIPLYER.getValue();
+                    this.ap += apPoints * PLAYER_AP_MULTIPLYER.getValue();
                     System.out.println("체력: " + this.hp + ", 공격력: " + this.ad + ", 마법력: " + this.ap);
                     break;
                 } else {

@@ -3,10 +3,11 @@ package game;
 import enemy.Enemy;
 import player.Player;
 
+import static gameenums.GameEnums.*;
 import java.util.*;
 
 public class GameSetting {
-    private int statusPoint = 13;
+    private int statusPoint = PLAYER_INITIAL_STATUS_POINT.getValue();
     private List<Player> playersList = new ArrayList<>();
     private Enemy enemy;
 
@@ -43,13 +44,13 @@ public class GameSetting {
 
     public boolean turnCheck() {
         // 각 플레이어에 대해 반복하면서 플레이어의 체력이 0 이하인 경우 해당 플레이어의 인덱스 제거
-        playersList.removeIf(player -> player.getHp() <= 0);
+        playersList.removeIf(player -> player.getHp() <= MIN_HP.getValue());
 
         if (playersList.isEmpty()) {
             return false;
         }
 
-        if (this.enemy.getHp() <= 0) {
+        if (this.enemy.getHp() <= MIN_HP.getValue()) {
             return false;
         }
         return true;
