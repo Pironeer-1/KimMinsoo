@@ -3,7 +3,8 @@ package enemy;
 import player.Player;
 import java.util.*;
 
-import static gameenums.GameEnums.*;
+import static gamefactors.GameEnums.*;
+import static gamefactors.GameSentences.*;
 
 public class EnemyAction {
 
@@ -15,7 +16,9 @@ public class EnemyAction {
 
     public void basicAttack(Player player, int playerIndex) {
         player.decreaseHp(enemy.getAd());
-        System.out.println((playerIndex + 1) + " 번 플레이어에게 " + enemy.getAd() + " 만큼의 데미지. 적의 공격으로 현재 남은 체력은 " + player.getHp() + "입니다.");
+        int enemyDamage = enemy.getAd();
+        int playerHp = player.getHp();
+        enemyAttackAnnounce(playerIndex, enemyDamage, playerHp);
     }
 
     public void healSelf() {
@@ -25,12 +28,12 @@ public class EnemyAction {
 
     public void attack(Player player, int playerIndex) {
         Random r = new Random();
-        System.out.println("------------------------------------------------------------------------------");
-        System.out.println("적의 차례입니다.\n");
+        makeHorizon();
+        enemyTurnAnnounce();
         int enemyAction = r.nextInt(10) + 1;
 
         if (enemyAction == ENEMY_STUN.getValue()) {
-            System.out.println("적은 섣불리 움직이지 못하고 있습니다.");
+            enemyStunAnnounce();
         } else if (ENEMY_ATTACK_START_POINT.getValue() <= enemyAction && enemyAction <= ENEMY_ATTACK_END_POINT.getValue()) {
             this.basicAttack(player, playerIndex);
         } else {

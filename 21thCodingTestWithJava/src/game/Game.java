@@ -4,7 +4,8 @@ import enemy.Enemy;
 import enemy.EnemyAction;
 import player.Player;
 import player.PlayerAction;
-import static gameenums.GameEnums.*;
+import static gamefactors.GameEnums.*;
+import static gamefactors.GameSentences.*;
 
 import java.util.Scanner;
 
@@ -40,7 +41,8 @@ public class Game {
             for (int playerIndex = 0; playerIndex < gameSetting.getPlayersList().size(); playerIndex++) {
                 Player player = gameSetting.getPlayersList().get(playerIndex);
                 this.playerAction = new PlayerAction(player, sc);
-                System.out.println("남은 플레이어: " + gameSetting.getPlayersList().size() + "명");
+                int remainPlayer = gameSetting.getPlayersList().size();
+                playerRemainAnnounce(remainPlayer);
                 playerAction.attack(enemy, playerIndex);
                 if (enemy.getHp() == MIN_HP.getValue()) {
                     break;
@@ -56,10 +58,10 @@ public class Game {
             }
         }
         if (this.enemy.getHp() <= MIN_HP.getValue()) {
-            System.out.println("축하합니다! 승리하셨습니다.");
+            victoryAnnounce();
             closeScanner();
         } else {
-            System.out.println("아쉽지만 패배하셨습니다.");
+            defeatAnnounce();
             closeScanner();
         }
     }

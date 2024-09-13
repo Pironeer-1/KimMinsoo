@@ -1,4 +1,4 @@
-package gameenums;
+package gamefactors;
 
 public enum GameEnums {
     // PLAYERS

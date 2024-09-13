@@ -4,7 +4,8 @@ import enemy.Enemy;
 
 import java.util.Random;
 import java.util.Scanner;
-import static gameenums.GameEnums.*;
+import static gamefactors.GameEnums.*;
+import static gamefactors.GameSentences.*;
 
 public class PlayerAction {
 
@@ -16,12 +17,22 @@ public class PlayerAction {
 
     public void checkStatus(Enemy enemy) {
         // 플레이어와 적의 현재 상태를 출력합니다.
-        System.out.println("현재 유저: 체력 " + player.getHp() + ", 공격력 " + player.getAd() + ", 마법력 " + player.getAp());
-        System.out.println("적: 체력 " + enemy.getHp() + ", 공격력 " + enemy.getAd() + ", 방어력 " + enemy.getAdDefence() + ", 마법방어력 " + enemy.getApDefence() + "\n");
+        int playerHp = player.getHp();
+        int playerAd = player.getAd();
+        int playerAp = player.getAp();
+
+        int enemyHp = enemy.getHp();
+        int enemyAd = enemy.getAd();
+        int enemyAdDef = enemy.getAdDefence();
+        int enemyApDef = enemy.getApDefence();
+
+        printPlayerCurrentStatus(playerHp, playerAd, playerAp);
+        printEnemyCurrentStatus(enemyHp, enemyAd, enemyAdDef, enemyApDef);
+
         // 적에게 일반 공격을 가합니다.
         int damage = player.getAd() - enemy.getAdDefence();
         enemy.decreaseHp(damage);
-        System.out.println("일반 공격으로 " + damage + " 의 데미지를 주었습니다. \n");
+        playerDammageAnnounce(damage);
     }
 
     public void basicAttack(Enemy enemy) {
@@ -37,10 +48,10 @@ public class PlayerAction {
         if (criticalPoint <= PLAYER_CRITICAL_RATE_POINT.getValue()) {
             damage *= CRITICAL_DAMMAGE_MULTIPLYER.getValue();
             enemy.decreaseHp(damage);
-            System.out.println("치명타가 적용되어 " + damage + " 의 데미지를 주었습니다.");
+            playerCriticalAttackAnnounce(damage);
         } else {
             enemy.decreaseHp(damage);
-            System.out.println("일반 공격으로 " + damage + " 의 데미지를 주었습니다.");
+            playerBasicAttackAnnounce(damage);
         }
     }
 
@@ -49,7 +60,7 @@ public class PlayerAction {
         int damage = Math.max(player.getAp() * PLAYER_MAGIC_ATTACK_MULTIPLIER.getValue() - enemy.getApDefence(), MIN_DAMAGE.getValue());
         // 데미지가 음수가 되는 것을 막음
         enemy.decreaseHp(damage);
-        System.out.println("마법 공격으로 " + damage + " 의 데미지를 주었습니다.");
+        playerMaginAttackAnnounce(damage);
     }
 
     public void healSelf() {
@@ -57,7 +68,8 @@ public class PlayerAction {
         Random r = new Random();
         int healPoint = r.nextInt(6) + 5;
         player.setHp(player.getHp() + healPoint);
-        System.out.println("체력을 회복합니다. 현재 hp는 " + player.getHp() + " 입니다.");
+        int playerHp = player.getHp();
+        playerHealingAnnounce(playerHp);
     }
 
     public void attack(Enemy enemy, int playerIndex) {
@@ -65,13 +77,14 @@ public class PlayerAction {
 
         while (true) {
             try {
-                System.out.println("------------------------------------------------------------------------------");
-                System.out.println((playerIndex + 1) + "번 플레이어의 차례입니다. 행동을 선택하세요. (1: 스테이터스 확인 + 일반 공격, 2: 기본 공격, 3: 마법 공격, 4: 체력 회복, exit: 종료)");
+                makeHorizon();
+                playerChooseActionAnnounce(playerIndex);
+
                 // 유저에게 1 ~ 4 중 입력 받기
                 String inputKey = sc.nextLine();
 
                 if (inputKey.equals("exit")) {
-                    System.out.println("프로그램을 종료합니다.");
+                    terminateProgram();
                     System.exit(0);
                 }
 
@@ -90,11 +103,11 @@ public class PlayerAction {
                     healSelf();
                     break;
                 } else {
-                    System.out.println("1~4 사이의 정수를 입력해주세요.");
+                    wrongIntegerInputAnnounce();
                 }
 
             } catch (NumberFormatException e) {
-                System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+                inputWithNumberAnnounce();
             }
         }
     }

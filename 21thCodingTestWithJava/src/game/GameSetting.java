@@ -3,7 +3,9 @@ package game;
 import enemy.Enemy;
 import player.Player;
 
-import static gameenums.GameEnums.*;
+import static gamefactors.GameEnums.*;
+import static gamefactors.GameSentences.*;
+
 import java.util.*;
 
 public class GameSetting {
@@ -17,12 +19,12 @@ public class GameSetting {
     public void setPlayers(Scanner sc) {
         while (true) {
             try {
-                System.out.print("플레이어 인원을 정하세요: ");
+                setPlayerNumberAnnounce();
                 String input = sc.nextLine();
                 int listNum = Integer.parseInt(input);
 
                 if (listNum <= 0) {
-                    System.out.println("플레이어 인원은 1 이상이어야 합니다.");
+                    minPlayerNumErrorAnnounce();
                     continue;
                 }
                 for (int i = 0; i < listNum; i++) {
@@ -32,7 +34,7 @@ public class GameSetting {
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+                inputWithNumberAnnounce();
                 sc.nextLine();
             }
         }
