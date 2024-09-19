@@ -11,4 +11,10 @@
 
 - [x] 댓글-대댓글 구현
 - [x] ERD 이미지 첨부
+
+![ERD for comments-replies](https://github.com/user-attachments/assets/72570d23-79b4-426e-9449-c80b20e12941)
+
 - [x] Swagger 토글 이미지 첨부
+
+![swagger_1](https://github.com/user-attachments/assets/48b9ecc9-cc96-4761-b854-02002893c351)
+![swagger_2](https://github.com/user-attachments/assets/93b565c8-f469-4363-9265-e26f1e18ca05)
