@@ -72,8 +72,10 @@ public class PlayerAction {
         playerHealingAnnounce(playerHp);
     }
 
-    public void attack(Enemy enemy, int playerIndex) {
-        Scanner sc = new Scanner(System.in);
+    public void attack(Enemy enemy, int playerIndex, Scanner sc) {
+         // Scanner sc = new Scanner(System.in);
+        // Game 클래스에서 스캐너 객체를 만들고 PlayerAction에 매개변수로 전달하기 때문에,
+        // 플레이어 액션 안에 있는 어택 메서드에서 스캐너 객체를 다시 또 생성하면 메모리 누수가 됨.
 
         while (true) {
             try {
