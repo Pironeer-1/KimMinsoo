@@ -2,6 +2,7 @@ package com.example.mytemplatecode.board.repository;
 
 import com.example.mytemplatecode.board.entity.Board;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +29,18 @@ public class BoardRepository {
 
     // 게시글 단건 조회
     public Optional<Board> findById(Long id) {
+        Assert.notNull(id, "ID must not be null!");
         return Optional.of(boardMap.get(id));
     }
 
     // 게시글 전체 조회
     public List<Board> findAll() {
         return boardMap.values().stream().toList();
+    }
+
+    // 게시글 삭제
+    public void deleteById(Long id) {
+        Assert.notNull(id, "ID must not be null!");
+        boardMap.remove(id);
     }
 }

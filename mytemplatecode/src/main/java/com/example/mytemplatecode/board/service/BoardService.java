@@ -64,4 +64,12 @@ public class BoardService {
         }
     }
 
+    // 게시글 삭제
+    // id에 해당하는 글이 없는 경우 예외 처리
+    public void deleteById(Long id) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ID " + id + "에 해당하는 게시글을 찾을 수 없습니다."));
+        boardRepository.deleteById(id);
+    }
+
 }

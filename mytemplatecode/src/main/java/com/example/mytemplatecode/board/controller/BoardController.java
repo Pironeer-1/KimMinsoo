@@ -4,7 +4,6 @@ import com.example.mytemplatecode.board.dto.request.BoardCreateRequest;
 import com.example.mytemplatecode.board.dto.request.BoardUpdateRequest;
 import com.example.mytemplatecode.board.dto.response.BoardResponse;
 import com.example.mytemplatecode.board.service.BoardService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +40,11 @@ public class BoardController {
     public ResponseEntity<?> update(@RequestBody BoardUpdateRequest request) {
         BoardResponse response = boardService.update(request);
         return ResponseEntity.ok().body(response);
+    }
+
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity<?> delete(@PathVariable("boardId") Long id) {
+        boardService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
