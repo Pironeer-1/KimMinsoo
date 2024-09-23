@@ -1,13 +1,13 @@
 package com.example.mytemplatecode.board.entity;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 public class Board {
     private Long id;
     private String title;
