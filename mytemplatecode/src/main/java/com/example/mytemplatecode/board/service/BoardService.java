@@ -1,6 +1,7 @@
 package com.example.mytemplatecode.board.service;
 
 import com.example.mytemplatecode.board.dto.request.BoardCreateRequest;
+import com.example.mytemplatecode.board.dto.request.BoardUpdateRequest;
 import com.example.mytemplatecode.board.dto.response.BoardResponse;
 import com.example.mytemplatecode.board.entity.Board;
 import com.example.mytemplatecode.board.repository.BoardRepository;
@@ -38,6 +39,29 @@ public class BoardService {
     public List<BoardResponse> findAll() {
         List<Board> boards = boardRepository.findAll();
         return boards.stream().map(BoardResponse::of).toList();
+    }
+
+    // 게시글 수정
+    public BoardResponse update(BoardUpdateRequest request) {
+        Board board = boardRepository.findById(request.id())
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+        updateTitle(request.title(), board);
+        updateContent(request.content(), board);
+        board.setUpdateAt(LocalDateTime.now());
+        boardRepository.update(board);
+        return BoardResponse.of(board);
+    }
+
+    private static void updateTitle(String title, Board board) {
+        if (title != null && !title.isBlank()){
+            board.setTitle(title);
+        }
+    }
+
+    private static void updateContent(String content, Board board) {
+        if (content != null && !content.isBlank()){
+            board.setContent(content);
+        }
     }
 
 }

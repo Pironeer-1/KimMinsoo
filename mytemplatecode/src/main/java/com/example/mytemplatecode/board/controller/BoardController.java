@@ -1,6 +1,7 @@
 package com.example.mytemplatecode.board.controller;
 
 import com.example.mytemplatecode.board.dto.request.BoardCreateRequest;
+import com.example.mytemplatecode.board.dto.request.BoardUpdateRequest;
 import com.example.mytemplatecode.board.dto.response.BoardResponse;
 import com.example.mytemplatecode.board.service.BoardService;
 import lombok.Getter;
@@ -33,5 +34,12 @@ public class BoardController {
         List<BoardResponse> responses = boardService.findAll();
         return ResponseEntity.ok().body(responses);
 
+    }
+
+    // 클라이언트의 요청을 파라미터로 받아서, 일정한 형식을 가진 응답 객체에 담아서 리턴
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody BoardUpdateRequest request) {
+        BoardResponse response = boardService.update(request);
+        return ResponseEntity.ok().body(response);
     }
 }

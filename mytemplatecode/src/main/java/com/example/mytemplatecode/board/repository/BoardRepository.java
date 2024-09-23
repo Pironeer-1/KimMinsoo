@@ -20,6 +20,12 @@ public class BoardRepository {
         boardMap.put(boardId, board);
     }
 
+    // 게시글 수정
+    // 기존 save 메서드에 합쳐져 있던 것 분리
+    public void update(Board board) {
+        boardMap.replace(board.getId(), board);
+    }
+
     // 게시글 단건 조회
     public Optional<Board> findById(Long id) {
         return Optional.of(boardMap.get(id));
