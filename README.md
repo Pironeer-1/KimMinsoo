@@ -18,3 +18,8 @@
 
 ![swagger_1](https://github.com/user-attachments/assets/48b9ecc9-cc96-4761-b854-02002893c351)
 ![swagger_2](https://github.com/user-attachments/assets/93b565c8-f469-4363-9265-e26f1e18ca05)
+
+3주차: SQL LV3 이상 10문제, & 나만의 템플릿 코드 만들기:
+
+- [x] SQL LV3 이상 10문제
+- [x] 댓글-대댓글 구현
