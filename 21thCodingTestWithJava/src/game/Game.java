@@ -43,7 +43,7 @@ public class Game {
                 this.playerAction = new PlayerAction(player, sc);
                 int remainPlayer = gameSetting.getPlayersList().size();
                 playerRemainAnnounce(remainPlayer);
-                playerAction.attack(enemy, playerIndex);
+                playerAction.attack(enemy, playerIndex, sc);
                 if (enemy.getHp() == MIN_HP.getValue()) {
                     break;
                 }
