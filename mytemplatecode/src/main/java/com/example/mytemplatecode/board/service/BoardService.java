@@ -39,23 +39,8 @@ public class BoardService {
     public BoardResponse update(BoardUpdateRequest request) {
         Board board = boardRepository.findById(request.id())
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-        updateTitle(request.title(), board);
-        updateContent(request.content(), board);
-        board.setUpdateAt(LocalDateTime.now());
-        boardRepository.update(board);
+        boardRepository.update(board.update(request));
         return BoardResponse.of(board);
-    }
-
-    private static void updateTitle(String title, Board board) {
-        if (title != null && !title.isBlank()){
-            board.setTitle(title);
-        }
-    }
-
-    private static void updateContent(String content, Board board) {
-        if (content != null && !content.isBlank()){
-            board.setContent(content);
-        }
     }
 
     // 게시글 삭제
