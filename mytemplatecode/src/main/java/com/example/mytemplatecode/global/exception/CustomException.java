@@ -1,5 +1,8 @@
 package com.example.mytemplatecode.global.exception;
 
+import lombok.Getter;
+
+@Getter
 public class CustomException extends RuntimeException {
     private Exception originException;
     private ErrorCode errorCode;
