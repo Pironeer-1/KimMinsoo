@@ -4,6 +4,7 @@ import com.example.mytemplatecode.board.dto.request.BoardCreateRequest;
 import com.example.mytemplatecode.board.dto.request.BoardUpdateRequest;
 import com.example.mytemplatecode.board.dto.response.BoardResponse;
 import com.example.mytemplatecode.board.entity.Board;
+import com.example.mytemplatecode.global.mapper.BoardMapper;
 import com.example.mytemplatecode.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,14 +19,7 @@ public class BoardService {
 
     // 게시글 저장
     public void save(BoardCreateRequest request) {
-        Board board = Board.builder()
-                .title(request.title())
-                .content(request.content())
-                .createAt(LocalDateTime.now())
-                .updateAt(LocalDateTime.now())
-                .build();
-
-        boardRepository.save(board);
+        boardRepository.save(BoardMapper.from(request));
     }
 
     // 게시글 단건 조회
