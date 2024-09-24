@@ -28,23 +28,11 @@ public class Board {
         this.updateAt = updateAt;
     }
 
+    // 메서드를 따로 만들지 않고 직접 객체의 필드값들에 접근하여 수정
     public Board update(BoardUpdateRequest request) {
-        updateTitle(request.title());
-        updateContent(request.content());
+        this.title = request.title();
+        this.content = request.content();
         this.updateAt = LocalDateTime.now();
         return this;
-    }
-
-    // 인스턴스 메서드로 변경, 객체에 직접 접근
-    private void updateTitle(String title) {
-        if (title != null && !title.isBlank()){
-            this.title = title;
-        }
-    }
-
-    private void updateContent(String content) {
-        if (content != null && !content.isBlank()){
-            this.content = content;
-        }
     }
 }

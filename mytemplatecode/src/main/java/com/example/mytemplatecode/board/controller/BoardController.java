@@ -6,6 +6,7 @@ import com.example.mytemplatecode.board.dto.response.BoardResponse;
 import com.example.mytemplatecode.board.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class BoardController {
 
     @PostMapping()
     @Operation(summary = "게시글 생성")
-    public ResponseEntity<?> create(@RequestBody BoardCreateRequest request) {
+    public ResponseEntity<?> create(@Valid @RequestBody BoardCreateRequest request) {
         boardService.save(request);
         return ResponseEntity.ok().build();
     }
@@ -44,7 +45,7 @@ public class BoardController {
     // 클라이언트의 요청을 파라미터로 받아서, 일정한 형식을 가진 응답 객체에 담아서 리턴
     @PutMapping
     @Operation(summary = "게시글 수정")
-    public ResponseEntity<?> update(@RequestBody BoardUpdateRequest request) {
+    public ResponseEntity<?> update(@Valid @RequestBody BoardUpdateRequest request) {
         BoardResponse response = boardService.update(request);
         return ResponseEntity.ok().body(response);
     }

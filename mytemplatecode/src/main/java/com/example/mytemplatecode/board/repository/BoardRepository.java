@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Repository
 public class BoardRepository {
     private final AtomicLong boardIdxGenerator = new AtomicLong(0);
-    private final HashMap<Long, Board> boardMap = new HashMap<Long, Board>();
+    private final HashMap<Long, Board> boardMap = new HashMap<>();
 
     // 게시글 저장
     public void save(Board board) {
@@ -30,7 +30,7 @@ public class BoardRepository {
     // 게시글 단건 조회
     public Optional<Board> findById(Long id) {
         Assert.notNull(id, "ID must not be null!");
-        return Optional.of(boardMap.get(id));
+        return Optional.ofNullable(boardMap.get(id));
     }
 
     // 게시글 전체 조회
