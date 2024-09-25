@@ -7,11 +7,11 @@ import com.example.mytemplatecode.global.exception.ErrorCode;
 import com.example.mytemplatecode.global.service.AuthService;
 import com.example.mytemplatecode.global.service.ResponseService;
 import com.example.mytemplatecode.member.dto.request.MemberCreateRequest;
+import com.example.mytemplatecode.member.dto.request.MemberDeleteRequest;
 import com.example.mytemplatecode.member.dto.request.MemberLoginRequest;
 import com.example.mytemplatecode.member.dto.request.MemberUpdateRequest;
 import com.example.mytemplatecode.member.entity.Member;
 import com.example.mytemplatecode.member.repository.MemberMemoryRepository;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,12 @@ public class MemberService {
 
     private final MemberMemoryRepository memberMemoryRepository;
     private final AuthService authService;
+
+    private void validateToken(String token) {
+        if (!authService.isTokenValid(token)) {
+            throw new CustomException(ErrorCode.JWT_ERROR_TOKEN);
+        }
+    }
 
     public SingleResult<JwtTokenSet> register (MemberCreateRequest request) {
         if (memberMemoryRepository.existByMemberId(request.memberId())) {
@@ -53,7 +59,10 @@ public class MemberService {
         return ResponseService.getSingleResult(jwtTokenSet);
     }
 
-    public SingleResult<JwtTokenSet> update(MemberUpdateRequest request) {
+    public SingleResult<JwtTokenSet> update(String token, MemberUpdateRequest request) {
+
+        validateToken(token);
+
         Member member = memberMemoryRepository.findByMemberId(request.memberId())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXIST));
 
@@ -82,4 +91,21 @@ public class MemberService {
 
         return ResponseService.getSingleResult(jwtTokenSet);
     }
+
+    public void delete(String token, MemberDeleteRequest request) {
+
+        validateToken(token);
+
+        Member member = memberMemoryRepository.findByMemberId(request.memberId())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_EXIST));
+
+        if (!member.getPassword().equals(request.password())) {
+            throw new CustomException(ErrorCode.USER_WRONG_PASSWORD);
+        }
+
+        memberMemoryRepository.delete(member);
+
+        authService.invalidateToken(member.getId());
+    }
+
 }

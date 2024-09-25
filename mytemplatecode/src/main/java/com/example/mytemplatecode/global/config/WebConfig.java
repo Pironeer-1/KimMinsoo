@@ -16,7 +16,17 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/board/**");
+        registry.addInterceptor(jwtInterceptor)
+
+                // member 도메인만 jwt 적용되도록
+                .addPathPatterns("/api/member/**")
+                .excludePathPatterns(
+                        "/api/board/**",
+                        "/api/member/login",
+                        "/api/member/register",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**"
+                );
     }
 
 }

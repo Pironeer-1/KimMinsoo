@@ -30,4 +30,9 @@ public class SuccessResponse<T> {
         return of(ResponseState.SUCCESS.getCode(), ResponseState.SUCCESS.getMessage(), data);
     }
 
+    // Delete를 처리를 위한 Void 반환 메서드 추가
+    public static SuccessResponse<Void> ok () {
+        return of(ResponseState.SUCCESS.getCode(), ResponseState.SUCCESS.getMessage(), null);
+    }
+
 }
