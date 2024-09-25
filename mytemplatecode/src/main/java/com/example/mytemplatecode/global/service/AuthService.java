@@ -39,4 +39,11 @@ public class AuthService {
         String token = jwtUtil.createToken(userIdx);
         tokenBlackList.add(token);
     }
+
+    // 로그아웃
+    public void logout(String token) {
+        if (jwtUtil.isValidToken(token)) {
+            tokenBlackList.add(token);
+        }
+    }
 }

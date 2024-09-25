@@ -43,6 +43,15 @@ public class MemberController {
         return SuccessResponse.ok(result);
     }
 
+    @PostMapping("/logout")
+    @Operation(summary = "로그아웃")
+    public SuccessResponse<Void> logout(@RequestHeader("Authorization") String token) {
+        // "Bearer " 제거
+        token = token.substring(7);
+        memberService.logout(token);
+        return SuccessResponse.ok();
+    }
+
     @DeleteMapping
     @Operation(summary = "회원 탈퇴")
     public SuccessResponse<Void> delete(

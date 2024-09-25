@@ -92,6 +92,10 @@ public class MemberService {
         return ResponseService.getSingleResult(jwtTokenSet);
     }
 
+    public void logout(String token) {
+        authService.logout(token);
+    }
+
     public void delete(String token, MemberDeleteRequest request) {
 
         validateToken(token);
