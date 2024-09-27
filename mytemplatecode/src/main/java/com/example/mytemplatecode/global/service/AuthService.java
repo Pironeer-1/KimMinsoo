@@ -2,7 +2,6 @@ package com.example.mytemplatecode.global.service;
 
 import com.example.mytemplatecode.global.dto.response.JwtTokenSet;
 import com.example.mytemplatecode.global.jwt.JwtUtil;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -19,12 +18,7 @@ public class AuthService {
 
     public JwtTokenSet generateToken(Long userIdx) {
         String token = jwtUtil.createToken(userIdx);
-
-        JwtTokenSet jwtTokenSet = JwtTokenSet.builder()
-                .token(token)
-                .build();
-
-        return jwtTokenSet;
+        return JwtTokenSet.builder().token(token).build();
     }
 
     // update, delete 시 토큰 유효성 확인
@@ -32,8 +26,8 @@ public class AuthService {
         if (tokenBlackList.contains(token)) {
             return false;
         }
+        return jwtUtil.isValidToken(token) && !jwtUtil.isExpired(token);
 
-        return jwtUtil.isValidToken(token);
     }
 
     // 회원 탈퇴 시 토큰 비활성화
@@ -52,7 +46,6 @@ public class AuthService {
     // 토큰 블랙리스트 관리
     // 1시간마다 클린업
     private static final long ONE_HOUR = 60 * 60 * 1000;
-
     @Scheduled(fixedRate = ONE_HOUR)
     public void clearTokenBlackList() {
         tokenBlackList.clear();

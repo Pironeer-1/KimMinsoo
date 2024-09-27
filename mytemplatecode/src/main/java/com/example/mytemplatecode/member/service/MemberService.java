@@ -111,5 +111,4 @@ public class MemberService {
 
         authService.invalidateToken(member.getId());
     }
-
 }
