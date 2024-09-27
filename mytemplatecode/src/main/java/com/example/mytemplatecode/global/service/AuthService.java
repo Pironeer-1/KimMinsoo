@@ -2,7 +2,9 @@ package com.example.mytemplatecode.global.service;
 
 import com.example.mytemplatecode.global.dto.response.JwtTokenSet;
 import com.example.mytemplatecode.global.jwt.JwtUtil;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -45,5 +47,14 @@ public class AuthService {
         if (jwtUtil.isValidToken(token)) {
             tokenBlackList.add(token);
         }
+    }
+
+    // 토큰 블랙리스트 관리
+    // 1시간마다 클린업
+    private static final long ONE_HOUR = 60 * 60 * 1000;
+
+    @Scheduled(fixedRate = ONE_HOUR)
+    public void clearTokenBlackList() {
+        tokenBlackList.clear();
     }
 }
